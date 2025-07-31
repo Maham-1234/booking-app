@@ -1,0 +1,38 @@
+                                                    List of databases
+    Name     |  Owner   | Encoding | Locale Provider | Collate | Ctype | Locale | ICU Rules |     Access privileges      
+-------------+----------+----------+-----------------+---------+-------+--------+-----------+----------------------------
+ booking_api | postgres | UTF8     | libc            | C       | C     |        |           | =Tc/postgres              +
+             |          |          |                 |         |       |        |           | postgres=CTc/postgres     +
+             |          |          |                 |         |       |        |           | booking_admin=CTc/postgres
+ library_db  | lib_user | UTF8     | libc            | C       | C     |        |           | =Tc/lib_user              +
+             |          |          |                 |         |       |        |           | lib_user=CTc/lib_user
+ postgres    | postgres | UTF8     | libc            | C       | C     |        |           | 
+ template0   | postgres | UTF8     | libc            | C       | C     |        |           | =c/postgres               +
+             |          |          |                 |         |       |        |           | postgres=CTc/postgres
+ template1   | postgres | UTF8     | libc            | C       | C     |        |           | =c/postgres               +
+             |          |          |                 |         |       |        |           | postgres=CTc/postgres
+ to_do       | postgres | UTF8     | libc            | C       | C     |        |           | =Tc/postgres              +
+             |          |          |                 |         |       |        |           | postgres=CTc/postgres     +
+             |          |          |                 |         |       |        |           | todo_admin=CTc/postgres
+ todo        | postgres | UTF8     | libc            | C       | C     |        |           | 
+(7 rows)
+
+                                                    List of databases
+    Name     |  Owner   | Encoding | Locale Provider | Collate | Ctype | Locale | ICU Rules |     Access privileges      
+-------------+----------+----------+-----------------+---------+-------+--------+-----------+----------------------------
+ booking_api | postgres | UTF8     | libc            | C       | C     |        |           | =Tc/postgres              +
+             |          |          |                 |         |       |        |           | postgres=CTc/postgres     +
+             |          |          |                 |         |       |        |           | booking_admin=CTc/postgres
+ library_db  | lib_user | UTF8     | libc            | C       | C     |        |           | =Tc/lib_user              +
+             |          |          |                 |         |       |        |           | lib_user=CTc/lib_user
+ postgres    | postgres | UTF8     | libc            | C       | C     |        |           | 
+ template0   | postgres | UTF8     | libc            | C       | C     |        |           | =c/postgres               +
+             |          |          |                 |         |       |        |           | postgres=CTc/postgres
+ template1   | postgres | UTF8     | libc            | C       | C     |        |           | =c/postgres               +
+             |          |          |                 |         |       |        |           | postgres=CTc/postgres
+ to_do       | postgres | UTF8     | libc            | C       | C     |        |           | =Tc/postgres              +
+             |          |          |                 |         |       |        |           | postgres=CTc/postgres     +
+             |          |          |                 |         |       |        |           | todo_admin=CTc/postgres
+ todo        | postgres | UTF8     | libc            | C       | C     |        |           | 
+(7 rows)
+
