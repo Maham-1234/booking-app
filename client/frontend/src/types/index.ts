@@ -92,11 +92,6 @@ export interface ApiErrorResponse {
   }[];
 }
 
-// ========================================================================
-// 3. API REQUEST (PAYLOAD) TYPES
-// These types are for data sent TO the API (e.g., in POST/PUT requests).
-// ========================================================================
-
 export interface RegisterData {
   name: string;
   email: string;
@@ -113,6 +108,8 @@ export interface LoginData {
 export interface UpdateProfileData {
   name?: string;
   email?: string;
+  currentPassword?:string;
+  newPassword?:string;
 }
 
 export interface CreateEventData {

@@ -1,128 +1,133 @@
-// // src/pages/EventsListPage.tsx
+import { useState, useEffect, useCallback } from "react";
+import { useEvents } from "@/contexts/EventContext";
 
-// import { useState, useEffect, useCallback } from "react";
-// import { useSearchParams } from 'react-router-dom';
+import {
+  EventFilterBar,
+  type FilterValues,
+} from "@/components/PageComponents/EventFilterBar";
+import EventList from "@/components/PageComponents/EventList";
 
-// // Import Contexts & Hooks
-// import { useEvents } from "@/contexts/EventContext";
+import { Button } from "@/components/ui/button";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { Loader2, AlertCircle } from "lucide-react";
 
-// // Import Components
-// import EventList from "@/components/PageComponents/EventList";
-// import { EventFilterBar, FilterValues } from "@/components/PageComponents/EventFilterBar";
-// import { Button } from "@/components/ui/button";
-// import { Spinner } from "@/components/ui/Spinner"; // Assuming you have a Spinner component
+export default function AllEventsPage() {
+  const { events, pagination, isLoading, error, fetchAllEvents } = useEvents();
 
-// // Import Icons
-// import { Calendar, Ticket } from "lucide-react";
+  const [filters, setFilters] = useState<FilterValues>({
+    search: "",
+    sort: "eventDate",
+  });
+  const [currentPage, setCurrentPage] = useState(1);
 
-// export default function EventsListPage() {
-//   // Get state and functions from the EventContext
-//   const { events, pagination, isLoading, error, fetchAllEvents } = useEvents();
+  const handleFilterChange = useCallback((newFilters: FilterValues) => {
+    setCurrentPage(1);
+    setFilters(newFilters);
+  }, []);
 
-//   // Use URL search params to manage filter state, making them shareable
-//   const [searchParams, setSearchParams] = useSearchParams();
+  useEffect(() => {
+    fetchAllEvents({
+      page: currentPage,
+      sort: filters.sort,
+      search: filters.search,
+    });
+  }, [currentPage, filters, fetchAllEvents]);
 
-//   // Initialize filter state from URL or with defaults
-//   const [filters, setFilters] = useState<FilterValues>({
-//     search: searchParams.get('search') || '',
-//     sort: searchParams.get('sort') || 'eventDate',
-//   });
-  
-//   // Initialize page state
-//   const [currentPage, setCurrentPage] = useState(Number(searchParams.get('page')) || 1);
+  const handlePageChange = (newPage: number) => {
+    if (newPage > 0 && newPage <= (pagination?.totalPages || 1)) {
+      setCurrentPage(newPage);
+    }
+  };
 
-//   // This function is memoized to prevent re-renders
-//   const handleFilterChange = useCallback((newFilters: FilterValues) => {
-//     setFilters(newFilters);
-//     setCurrentPage(1); // Reset to first page on filter change
-//     const params = new URLSearchParams();
-//     if (newFilters.search) params.set('search', newFilters.search);
-//     if (newFilters.sort) params.set('sort', newFilters.sort);
-//     params.set('page', '1');
-//     setSearchParams(params);
-//   }, [setSearchParams]);
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
+      <div className="container mx-auto px-4 py-12">
+        {/* Page Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+            Discover Your Next Experience
+          </h1>
+          <p className="text-lg md:text-xl text-muted-foreground mt-4 max-w-2xl mx-auto">
+            Browse through a curated list of events. Your next adventure awaits!
+          </p>
+        </div>
 
-//   const handlePageChange = (newPage: number) => {
-//     setCurrentPage(newPage);
-//     const params = new URLSearchParams(searchParams);
-//     params.set('page', String(newPage));
-//     setSearchParams(params);
-//   };
+        {/* The Filter Bar component handles all filtering UI and logic */}
+        <div className="mb-8">
+          <EventFilterBar
+            onFilterChange={handleFilterChange}
+            initialFilters={filters}
+          />
+        </div>
 
-//   // Effect to fetch events whenever filters or page change
-//   useEffect(() => {
-//     fetchAllEvents({
-//       page: currentPage,
-//       limit: 9, // Or your preferred limit
-//       search: filters.search,
-//       sort: filters.sort,
-//     });
-//   }, [filters, currentPage, fetchAllEvents]);
+        {/* Main Content Area: Conditionally renders loading, error, or the list */}
+        <div className="min-h-[400px]">
+          {isLoading ? (
+            <div className="flex justify-center items-center py-20">
+              <Loader2 className="w-12 h-12 animate-spin text-primary" />
+            </div>
+          ) : error ? (
+            <div className="text-center py-20 text-red-500">
+              <AlertCircle className="w-16 h-16 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">
+                Failed to Load Events
+              </h3>
+              <p className="text-red-400">{error}</p>
+              <Button
+                onClick={() => fetchAllEvents({ page: 1, ...filters })}
+                className="mt-4 rounded-2xl"
+              >
+                Try Again
+              </Button>
+            </div>
+          ) : (
+            // The EventList component now handles the grid and the "no results" message
+            <EventList events={events} />
+          )}
+        </div>
 
-//   return (
-//     <MainLayout>
-//       <div className="flex flex-col min-h-screen">
-//         {/* Top Section - Title and Filters */}
-//         <section className="bg-muted/30 border-b">
-//           <div className="container mx-auto px-4 py-12">
-//             <div className="max-w-3xl">
-//               <div className="flex items-center gap-3 mb-4">
-//                  <Ticket className="w-8 h-8 text-primary" />
-//                  <h1 className="text-4xl font-bold">Explore Events</h1>
-//               </div>
-//               <p className="text-lg text-muted-foreground mb-6">
-//                 Find your next experience. Search for events, filter by category, and sort by date or price to find exactly what you're looking for.
-//               </p>
-//               <EventFilterBar 
-//                 onFilterChange={handleFilterChange}
-//                 initialFilters={filters}
-//               />
-//             </div>
-//           </div>
-//         </section>
-
-//         {/* Main Content - Event Grid */}
-//         <main className="flex-grow container mx-auto px-4 py-12">
-//           {isLoading && (
-//             <div className="flex justify-center items-center h-64">
-//               <Spinner size="lg" />
-//             </div>
-//           )}
-//           {!isLoading && error && (
-//              <div className="text-center py-12 text-red-500">
-//                 <p>Error: {error}</p>
-//              </div>
-//           )}
-//           {!isLoading && !error && (
-//             <>
-//               <EventList events={events} />
-//               {pagination && pagination.totalPages > 1 && (
-//                 <div className="flex justify-center mt-12">
-//                   <div className="flex items-center gap-2">
-//                     <Button 
-//                       onClick={() => handlePageChange(currentPage - 1)} 
-//                       disabled={currentPage === 1}
-//                       variant="outline"
-//                     >
-//                       Previous
-//                     </Button>
-//                     <span className="text-sm text-muted-foreground">
-//                       Page {pagination.page} of {pagination.totalPages}
-//                     </span>
-//                     <Button 
-//                       onClick={() => handlePageChange(currentPage + 1)} 
-//                       disabled={currentPage === pagination.totalPages}
-//                       variant="outline"
-//                     >
-//                       Next
-//                     </Button>
-//                   </div>
-//                 </div>
-//               )}
-//             </>
-//           )}
-//         </main>
-//       </div>
-//     </MainLayout>
-//   );
-// }
+        {/* Pagination: Only render if not loading, no error, and more than one page exists */}
+        {!isLoading && !error && pagination && pagination.totalPages > 1 && (
+          <div className="mt-12 flex justify-center">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    className={
+                      currentPage === 1
+                        ? "pointer-events-none opacity-50"
+                        : "cursor-pointer"
+                    }
+                  />
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationLink isActive>
+                    Page {currentPage} of {pagination.totalPages}
+                  </PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationNext
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    className={
+                      currentPage === pagination.totalPages
+                        ? "pointer-events-none opacity-50"
+                        : "cursor-pointer"
+                    }
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

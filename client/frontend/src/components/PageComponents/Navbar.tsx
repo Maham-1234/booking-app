@@ -81,7 +81,7 @@ export default function Navbar() {
       {/* only show this link if authenticated */}
       {isAuthenticated && (
         <Link
-          to="/my-bookings"
+          to="/user/bookings"
           className={
             isMobile
               ? "text-lg"
@@ -173,7 +173,7 @@ export default function Navbar() {
                   {/* Link to bookings for user */}
                   {!isAdmin && (
                     <DropdownMenuItem asChild>
-                      <Link to="/my-bookings">
+                      <Link to="/user/bookings">
                         <Ticket className="mr-2 h-4 w-4" />
                         <span>My Bookings</span>
                       </Link>
