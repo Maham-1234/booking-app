@@ -16,6 +16,7 @@ export interface Event {
   location: string;
   totalSeats: number;
   availableSeats: number;
+  image: string | null;
   price: number;
   status: "active" | "inactive" | "completed" | "cancelled";
   createdAt: string;

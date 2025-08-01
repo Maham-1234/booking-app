@@ -70,12 +70,12 @@ class ApiClient {
             }
           }
 
-          // Handle other status errors
-          const message =
-            (error.response.data as any)?.message || error.message;
-          window.location.href = `/error?status=${status}&message=${encodeURIComponent(
-            message
-          )}`;
+          // // Handle other status errors
+          // const message =
+          //   (error.response.data as any)?.message || error.message;
+          // window.location.href = `/error?status=${status}&message=${encodeURIComponent(
+          //   message
+          // )}`;
 
           return Promise.reject(error);
         }
