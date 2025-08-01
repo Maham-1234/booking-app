@@ -35,6 +35,7 @@ export interface Booking {
   event?: Event;
   user?: User;
 }
+export type Theme = "light" | "dark";
 
 export interface UserProfileData {
   user: User;
@@ -152,19 +153,77 @@ export interface UpdateBookingData {
 
 // Add these to your existing types file
 
+export interface UserResponse {
+  user: User;
+}
+
 export interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
-  login: (data: LoginData) => Promise<ApiResponse<User>>;
-  register: (data: RegisterData) => Promise<ApiResponse<User>>;
+  login: (data: LoginData) => Promise<ApiResponse<UserResponse>>;
+  register: (data: RegisterData) => Promise<ApiResponse<UserResponse>>;
   logout: () => Promise<void>;
-  updateProfile: (data: UpdateProfileData) => Promise<ApiResponse<User>>;
-  uploadAvatar: (file: File) => Promise<ApiResponse<User>>;
-  deleteAvatar: () => Promise<ApiResponse<User>>;
-  refreshProfile: () => Promise<ApiResponse<User>>;
+  updateProfile: (
+    data: UpdateProfileData
+  ) => Promise<ApiResponse<UserResponse>>;
+  uploadAvatar: (file: File) => Promise<ApiResponse<UserResponse>>;
+  deleteAvatar: () => Promise<ApiResponse<UserResponse>>;
+  refreshProfile: () => Promise<ApiResponse<UserResponse>>;
   clearError: () => void;
+}
+
+export interface EventResponse {
+  event: Event;
+}
+
+export interface EventContextType {
+  events: Event[];
+  event: Event | null;
+  pagination: PaginatedData<Event>["pagination"] | null;
+  isLoading: boolean;
+  error: string | null;
+  fetchAllEvents: (filters?: EventFilters) => Promise<void>;
+  fetchEventById: (id: number) => Promise<void>;
+  createEvent: (data: CreateEventData) => Promise<ApiResponse<EventResponse>>;
+  updateEvent: (
+    id: number,
+    data: UpdateEventData
+  ) => Promise<ApiResponse<EventResponse>>;
+  deleteEvent: (id: number) => Promise<void>;
+  clearEvent: () => void;
+  clearError: () => void;
+}
+
+export interface BookingResponse {
+  booking: Booking;
+}
+
+export interface BookingContextType {
+  bookings: Booking[];
+  specificBooking: Booking | null;
+  pagination: PaginatedData<Booking>["pagination"] | null;
+  isLoading: boolean;
+  error: string | null;
+  getAllBookings: (filters?: BookingFilters) => Promise<void>;
+  getUserBookings: (filters?: BookingFilters) => Promise<void>;
+  getBooking: (id: number) => Promise<Booking | undefined>;
+  createBooking: (
+    data: CreateBookingData
+  ) => Promise<BookingResponse | undefined>;
+  updateBooking: (
+    id: number,
+    data: UpdateBookingData
+  ) => Promise<BookingResponse | undefined>;
+  cancelBooking: (id: number) => Promise<void>;
+  clearBooking: () => void;
+  clearError: () => void;
+}
+
+export interface ThemeContextType {
+  theme: Theme;
+  toggleTheme: () => void;
 }
 
 export interface EventFilters {

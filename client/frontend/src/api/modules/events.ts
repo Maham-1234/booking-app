@@ -6,11 +6,9 @@ import type {
   ApiResponse,
   PaginatedData,
   EventFilters,
+  EventResponse,
 } from "../../types";
 
-export interface EventResponse {
-  event: Event;
-}
 /**
  * fetches a paginated list of all events
  */

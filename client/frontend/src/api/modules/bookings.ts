@@ -6,18 +6,15 @@ import type {
   ApiResponse,
   PaginatedData,
   BookingFilters,
+  BookingResponse,
 } from "../../types";
 
-export interface BookingResponse {
-  booking: Booking;
-}
 /**
  * Get all bookings - Admin only
  * Supports pagination, status filtering, and search by event title/location
  * @param {BookingFilters} filters - status,search, pagination filters
  * @returns {PaginatedData<Booking>} bookings list
- */
-export const getAllBookings = async (
+ */ export const getAllBookings = async (
   filters: BookingFilters = {}
 ): Promise<ApiResponse<PaginatedData<Booking>>> => {
   const { page = 1, limit = 9, status = "confirmed", search = "" } = filters;
@@ -50,6 +47,16 @@ export const getUserBookings = async (
   return apiClient.get(`/bookings?${queryParameters.toString()}`);
 };
 
+/**
+ * get a specific booking
+ * @param {number} id - booking id
+ * @returns booking object
+ */
+export const getBookingById = async (
+  id: number
+): Promise<ApiResponse<BookingResponse>> => {
+  return apiClient.get<ApiResponse<BookingResponse>>(`/bookings/${id}`);
+};
 /**
  * Create a booking
  * @param {CreateBookingData} bookingData

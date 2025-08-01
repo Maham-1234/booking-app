@@ -1,15 +1,11 @@
 import { apiClient } from "../axiosClient";
 import type {
-  User,
   LoginData,
   RegisterData,
   UpdateProfileData,
   ApiResponse,
+  UserResponse,
 } from "../../types";
-
-export interface UserResponse {
-  user: User;
-}
 
 /**
  * Registers a new user.
