@@ -31,7 +31,7 @@ const completePastEvents = async () => {
 //   completePastEvents();
 // });
 
-cron.schedule("* * * * *", () => {
+cron.schedule("0 0 * * *", () => {
   console.log("Running scheduled job to complete past events...");
   completePastEvents();
 });
