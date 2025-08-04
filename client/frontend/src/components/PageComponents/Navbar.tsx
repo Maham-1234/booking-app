@@ -79,7 +79,7 @@ export default function Navbar() {
         Events
       </Link>
       {/* only show this link if authenticated */}
-      {isAuthenticated && (
+      {isAuthenticated && !isAdmin && (
         <Link
           to="/user/bookings"
           className={
@@ -108,13 +108,20 @@ export default function Navbar() {
       )}
     </>
   );
+    let destination = "/";
+  if (isAuthenticated && user?.role === "admin") {
+    destination = "/admin/dashboard";
+  } else if (isAuthenticated && user?.role === "user") {
+    destination = "/user/home";
+  }
+
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to={destination} className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
               <Calendar className="w-5 h-5 text-primary-foreground" />
             </div>

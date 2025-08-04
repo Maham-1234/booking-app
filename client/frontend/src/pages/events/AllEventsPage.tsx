@@ -4,8 +4,8 @@ import { useEvents } from "@/contexts/EventContext";
 import {
   EventFilterBar,
   type FilterValues,
-} from "@/components/PageComponents/EventFilterBar";
-import EventList from "@/components/PageComponents/EventList";
+} from "@/components/PageComponents/event/EventFilterBar";
+import EventList from "@/components/PageComponents/event/EventList";
 
 import { Button } from "@/components/ui/button";
 import {

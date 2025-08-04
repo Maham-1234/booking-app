@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 
 import { SectionHeader } from "@/components/PageComponents/SectionHeader";
 import {StatsCard} from "../components/PageComponents/StatCard";
-import EventList from "@/components/PageComponents/EventList";
+import EventList from "@/components/PageComponents/event/EventList";
 
 import { Calendar, Users, Star, ArrowRight, Sparkles } from "lucide-react";
 

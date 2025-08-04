@@ -15,12 +15,12 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Calendar, Mail, User, AlertCircle } from "lucide-react";
 
 // Import reusable components
-import { AuthLayout } from "@/components/PageComponents/AuthLayout";
+import { AuthLayout } from "@/components/PageComponents/auth/AuthLayout";
 import { WelcomePanel } from "@/components/PageComponents/WelcomePanel";
 import { GoogleAuthButton } from "@/components/PageComponents/GoogleAuthButton";
 import { SeparatorWithText } from "@/components/PageComponents/SeperatorWithText";
-import { PasswordInput } from "@/components/PageComponents/PasswordInput";
-import { AuthFormLink } from "@/components/PageComponents/AuthFormLink";
+import { PasswordInput } from "@/components/PageComponents/auth/PasswordInput";
+import { AuthFormLink } from "@/components/PageComponents/auth/AuthFormLink";
 
 import { useAuth } from "@/contexts/AuthContext";
 import type { RegisterData } from "@/types";

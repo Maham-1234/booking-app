@@ -10,6 +10,9 @@ import AllEventsPage from "@/pages/events/AllEventsPage";
 import EventDetailsPage from "@/pages/events/EventDetailPage";
 import ProfilePage from "@/pages/profile/ProfilePage";
 import MyBookingsPage from "@/pages/user/MyBookingsPage";
+import AdminDashboardPage from "@/pages/admin/DashboardPage";
+import { RoleGuard } from "@/components/PageComponents/RoleGuard";
+import CreateEventPage from "@/pages/admin/events/CreateEventPage";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -19,14 +22,14 @@ const AppRoutes = () => {
       <Route path="/events" element={<AllEventsPage />} />
       <Route path="/events/:id" element={<EventDetailsPage />} />
 
-      <Route
+      {/* <Route
         path="/user/home"
         element={
           <ProtectedRoute>
             <HomePage />
           </ProtectedRoute>
         }
-      />
+      /> */}
       <Route
         path="/profile"
         element={
@@ -35,14 +38,37 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
-      <Route
+      {/* <Route
         path="/user/bookings"
         element={
           <ProtectedRoute>
             <MyBookingsPage />
           </ProtectedRoute>
         }
-      />
+      /> */}
+      <Route element={<RoleGuard allowedRoles={["user"]} />}>
+        <Route
+          path="/user/bookings"
+          element={
+            <ProtectedRoute>
+              <MyBookingsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/home"
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
+      </Route>
+
+      <Route element={<RoleGuard allowedRoles={["admin"]} />}>
+        <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+        <Route path="/admin/events/create" element={<CreateEventPage />} />
+      </Route>
     </Routes>
   );
 };

@@ -96,6 +96,8 @@ const schemas = {
       body: z.object({
         name: z.string().min(2).max(50).optional(),
         email: z.email().optional(),
+        currentPassword: z.string().optional(),
+        newPassword: z.string().optional(),
       }),
     }),
 
@@ -145,9 +147,10 @@ const schemas = {
           location: z.string().optional(),
           price: z.coerce.number().min(0).optional(),
           status: z.enum(["active", "cancelled", "completed"]).optional(),
+          image: z.string().nullable().optional(),
           totalSeats: z.coerce.number().int().min(1).optional(),
         })
-        .strict(), // Disallow extra properties in the body
+        .strip(), // Disallow extra properties in the body
     }),
     getAllRequest: z.object({
       query: paginationQuerySchema.extend({

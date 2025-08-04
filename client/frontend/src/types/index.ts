@@ -237,3 +237,14 @@ export interface BookingFilters {
   status?: string;
   search?: string;
 }
+
+export interface EventFormValues {
+  title: string;
+  description: string;
+  location: string;
+  eventDate: string; 
+  price: number;
+  totalSeats: number;
+  category?: string;
+  image?: string;
+}

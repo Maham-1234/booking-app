@@ -13,8 +13,8 @@ import {
   AlertCircle,
 } from "lucide-react";
 
-import InfoItem from "@/components/PageComponents/InfoItem";
-import BookingSidebar from "@/components/PageComponents/BookingSidebar";
+import InfoItem from "@/components/PageComponents/event/InfoItem";
+import BookingSidebar from "@/components/PageComponents/booking/BookingSidebar";
 
 export default function EventDetailsPage() {
   const { id } = useParams<{ id: string }>();

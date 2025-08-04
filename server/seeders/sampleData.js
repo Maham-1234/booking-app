@@ -39,8 +39,7 @@ const seedDatabase = async () => {
       },
     ]);
 
-    // Create events
-    const events = await Event.bulkCreate([
+    const rawEvents = [
       {
         title: "Tech Conference 2024",
         description:
@@ -85,7 +84,15 @@ const seedDatabase = async () => {
         price: 35.0,
         status: "active",
       },
-    ]);
+    ];
+
+    const events = await Event.bulkCreate(
+      rawEvents.map((event) => ({
+        ...event,
+        image: `https://picsum.photos/600/384?random=${Math.random()%100}
+`,
+      }))
+    );
 
     // Create some sample bookings
     const bookings = await Booking.bulkCreate(

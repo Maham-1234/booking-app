@@ -34,7 +34,7 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
     setError(null);
     try {
       const response = await bookingApi.getAllBookings(filters);
-      setBookings(response.data.events);
+      setBookings(response.data.bookings);
       setPagination(response.data.pagination);
     } catch (err: any) {
       setError(err.response?.data?.message || "Failed to fetch all bookings.");
@@ -48,7 +48,8 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
     setError(null);
     try {
       const response = await bookingApi.getUserBookings(filters);
-      setBookings(response.data.events);
+      console.log("response: ", response);
+      setBookings(response.data.bookings);
       setPagination(response.data.pagination);
     } catch (err: any) {
       setError(err.response?.data?.message || "Failed to fetch your bookings.");

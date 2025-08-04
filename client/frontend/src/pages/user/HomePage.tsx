@@ -4,9 +4,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useBookings } from "@/contexts/BookingContext";
 import { useEvents } from "@/contexts/EventContext";
 
-import DashboardStatCard from "@/components/PageComponents/DashboardStatCard";
-import UpcomingBookingCard from "@/components/PageComponents/UpcomingBookingCard";
-import RecommendedEventCard from "@/components/PageComponents/RecommendedEventCard";
+import DashboardStatCard from "@/components/PageComponents/user/DashboardStatCard";
+import UpcomingBookingCard from "@/components/PageComponents/booking/UpcomingBookingCard";
+import RecommendedEventCard from "@/components/PageComponents/user/RecommendedEventCard";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -32,15 +32,29 @@ export default function HomePage() {
   } = useBookings();
   const { events, isLoading: eventsLoading, fetchAllEvents } = useEvents();
 
+  // useEffect(() => {
+  //   getUserBookings({ limit: 3, status: "confirmed" });
+  //   console.log(bookings);
+  //   fetchAllEvents({ limit: 4, sort: "-createdAt" }); // Fetch latest events as "recommended"
+  // }, [getUserBookings, fetchAllEvents]);
   useEffect(() => {
-    getUserBookings({ limit: 3, status: "confirmed" });
-    fetchAllEvents({ limit: 4, sort: "-createdAt" }); // Fetch latest events as "recommended"
+    const fetchData = async () => {
+      await getUserBookings({ limit: 3, status: "confirmed" });
+      await fetchAllEvents({ limit: 4, sort: "-createdAt" });
+    };
+
+    fetchData();
   }, [getUserBookings, fetchAllEvents]);
 
-  const upcomingBookings = useMemo(() =>
-  (bookings || []).filter(b => new Date(b.event.eventDate) > new Date()),
-  [bookings]
-);
+  // useEffect(() => {
+  //   console.log("Bookings updated:", bookings);
+  // }, [bookings]);
+
+  const upcomingBookings = useMemo(
+    () =>
+      (bookings || []).filter((b) => new Date(b.event.eventDate) > new Date()),
+    [bookings]
+  );
 
   const memberSince = useMemo(
     () => (user?.createdAt ? new Date(user.createdAt).getFullYear() : ""),
@@ -48,6 +62,9 @@ export default function HomePage() {
   );
 
   const isLoading = bookingsLoading || eventsLoading;
+  // useEffect(() => {
+  //   console.log("Upcoming Bookings:", upcomingBookings);
+  // }, [upcomingBookings]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/5">
@@ -57,7 +74,7 @@ export default function HomePage() {
           <div className="flex items-center space-x-4 mb-4 md:mb-0">
             <Avatar className="w-16 h-16 border-4 border-primary/20">
               <AvatarImage
-                src={user?.avatar ?? undefined}
+                src={`http://localhost:3000/uploads/avatars/${user?.avatar}`}
                 alt={user?.name ?? undefined}
               />
               <AvatarFallback className="text-lg font-semibold bg-muted">
@@ -88,7 +105,7 @@ export default function HomePage() {
               className="rounded-2xl bg-transparent"
               asChild
             >
-              <Link to="/user/profile">
+              <Link to="/profile">
                 <Settings className="w-4 h-4" />
               </Link>
             </Button>
@@ -202,7 +219,7 @@ export default function HomePage() {
                   asChild
                   className="w-full justify-start rounded-2xl bg-transparent h-12 text-base"
                 >
-                  <Link to="/user/profile">
+                  <Link to="/profile">
                     <Settings className="w-4 h-4 mr-3" /> My Profile
                   </Link>
                 </Button>

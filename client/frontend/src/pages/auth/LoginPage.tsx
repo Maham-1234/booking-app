@@ -14,11 +14,11 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Calendar, Mail, AlertCircle } from "lucide-react";
 
-import { AuthLayout } from "@/components/PageComponents/AuthLayout";
+import { AuthLayout } from "@/components/PageComponents/auth/AuthLayout";
 import { WelcomePanel } from "@/components/PageComponents/WelcomePanel";
 import { GoogleAuthButton } from "@/components/PageComponents/GoogleAuthButton";
 import { SeparatorWithText } from "@/components/PageComponents/SeperatorWithText";
-import { PasswordInput } from "@/components/PageComponents/PasswordInput";
+import { PasswordInput } from "@/components/PageComponents/auth/PasswordInput";
 
 import { useAuth } from "@/contexts/AuthContext";
 import type { LoginData } from "@/types";

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useAuth } from "@/contexts/AuthContext";
 import type { UpdateProfileData } from "@/types"; 
-import ProfileSectionCard from "@/components/PageComponents/ProfileSectionCard";
+import ProfileSectionCard from "@/components/PageComponents/profile/ProfileSectionCard";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -125,7 +125,7 @@ export default function ProfilePage() {
           {/* Left Column: Avatar */}
           <div className="md:col-span-1 space-y-4 items-center">
             <h2 className="text-lg font-semibold">Profile Picture</h2>
-            <Avatar className="w-40 h-40 border-4 border-primary/20 iterms-center">
+            <Avatar className="w-40 h-40 border-4 border-primary/20">
               <AvatarImage src={`http://localhost:3000/uploads/avatars/${user.avatar}`} alt={user.name} p-2 m-2 />
               <AvatarFallback className="text-4xl bg-muted">
                 {user.name
