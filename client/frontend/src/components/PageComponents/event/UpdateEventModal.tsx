@@ -3,10 +3,8 @@ import { useForm, FormProvider, type SubmitHandler } from "react-hook-form";
 import { useEvents } from "@/contexts/EventContext";
 import type { Event, EventFormValues, UpdateEventData } from "@/types";
 
-// Reusable Components
 import EventForm from "./EventForm";
 
-// UI Components
 import {
   Dialog,
   DialogContent,
@@ -51,7 +49,7 @@ export default function UpdateEventModal({
         eventDate: toDateTimeLocal(new Date(event.eventDate)),
         price: event.price,
         totalSeats: event.totalSeats,
-        imageUrl: event.image ?? undefined,
+        image: event.image ?? undefined,
       });
     }
   }, [event, isOpen, reset]);
